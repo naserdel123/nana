@@ -1,0 +1,167 @@
+
+html_dashboard = '''<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سوق الأساطير - المنتجات</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+    <!-- شريط التنقل -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class="fas fa-store"></i>
+            <span>سوق الأساطير</span>
+        </div>
+        
+        <!-- البحث -->
+        <div class="search-section">
+            <div class="search-box">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="searchInput" placeholder="ابحث عن منتج...">
+                <div class="search-filters">
+                    <select id="countryFilter">
+                        <option value="">جميع البلدان</option>
+                        <option value="sa">🇸🇦 السعودية</option>
+                        <option value="ae">🇦🇪 الإمارات</option>
+                        <option value="kw">🇰🇼 الكويت</option>
+                        <option value="qa">🇶🇦 قطر</option>
+                        <option value="bh">🇧🇭 البحرين</option>
+                        <option value="om">🇴🇲 عمان</option>
+                        <option value="eg">🇪🇬 مصر</option>
+                        <option value="sd">🇸🇩 السودان</option>
+                        <option value="jo">🇯🇴 الأردن</option>
+                        <option value="iq">🇮🇶 العراق</option>
+                        <option value="sy">🇸🇾 سوريا</option>
+                        <option value="lb">🇱🇧 لبنان</option>
+                        <option value="ye">🇾🇪 اليمن</option>
+                        <option value="ma">🇲🇦 المغرب</option>
+                        <option value="tn">🇹🇳 تونس</option>
+                        <option value="dz">🇩🇿 الجزائر</option>
+                        <option value="ly">🇱🇾 ليبيا</option>
+                        <option value="ps">🇵🇸 فلسطين</option>
+                        <option value="us">🇺🇸 أمريكا</option>
+                        <option value="uk">🇬🇧 بريطانيا</option>
+                        <option value="tr">🇹🇷 تركيا</option>
+                        <option value="other">🌍 دول أخرى</option>
+                    </select>
+                    <input type="text" id="cityFilter" placeholder="المدينة...">
+                </div>
+                <button class="search-btn" onclick="searchProducts()">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- القائمة -->
+        <div class="nav-menu">
+            <button class="menu-dots" onclick="toggleMenu()">
+                <i class="fas fa-ellipsis-v"></i>
+            </button>
+            
+            <div class="dropdown-menu" id="userMenu">
+                <a href="#" class="menu-item" onclick="showProfile()">
+                    <div class="menu-icon">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="menu-info">
+                        <span class="menu-title">الملف الشخصي</span>
+                        <span class="menu-desc">عرض وتعديل بياناتك</span>
+                    </div>
+                </a>
+                
+                <a href="#" class="menu-item" onclick="showHelp()">
+                    <div class="menu-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="menu-info">
+                        <span class="menu-title">المساعدة</span>
+                        <span class="menu-desc">مركز المساعدة والدعم</span>
+                    </div>
+                </a>
+                
+                <div class="menu-divider"></div>
+                
+                <a href="add-product.html" class="menu-item highlight">
+                    <div class="menu-icon">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <div class="menu-info">
+                        <span class="menu-title">نشر منتج</span>
+                        <span class="menu-desc">أضف منتجك للبيع</span>
+                    </div>
+                </a>
+                
+                <div class="menu-divider"></div>
+                
+                <a href="index.html" class="menu-item logout" onclick="logout()">
+                    <div class="menu-icon">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </div>
+                    <div class="menu-info">
+                        <span class="menu-title">تسجيل الخروج</span>
+                        <span class="menu-desc">الخروج من الحساب</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="main-content">
+        <!-- ترحيب -->
+        <div class="welcome-section">
+            <h1>أهلاً بك في <span class="highlight-text">سوق الأساطير</span> 👋</h1>
+            <p>اكتشف أفضل المنتجات من البائعين الموثوقين</p>
+        </div>
+
+        <!-- فلترة سريعة -->
+        <div class="quick-filters">
+            <button class="filter-chip active" onclick="filterBy('all')">الكل</button>
+            <button class="filter-chip" onclick="filterBy('electronics')">📱 إلكترونيات</button>
+            <button class="filter-chip" onclick="filterBy('cars')">🚗 سيارات</button>
+            <button class="filter-chip" onclick="filterBy('fashion')">👕 أزياء</button>
+            <button class="filter-chip" onclick="filterBy('home')">🏠 منزل</button>
+            <button class="filter-chip" onclick="filterBy('sports')">⚽ رياضة</button>
+            <button class="filter-chip" onclick="filterBy('books')">📚 كتب</button>
+        </div>
+
+        <!-- شبكة المنتجات -->
+        <div class="products-grid" id="productsGrid">
+            <!-- المنتجات ستضاف هنا ديناميكياً -->
+        </div>
+
+        <!-- لا يوجد منتجات -->
+        <div class="no-products hidden" id="noProducts">
+            <div class="no-products-icon">
+                <i class="fas fa-search"></i>
+            </div>
+            <h3>لا توجد منتجات</h3>
+            <p>جرب البحث بكلمات مختلفة أو تفقد الفلاتر</p>
+        </div>
+    </main>
+
+    <!-- زر العائم لإضافة منتج -->
+    <a href="add-product.html" class="fab-btn" title="نشر منتج جديد">
+        <i class="fas fa-plus"></i>
+        <span class="fab-tooltip">نشر منتج</span>
+    </a>
+
+    <script src="js/app.js"></script>
+    <script>
+        // تحميل المنتجات عند فتح الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
+            setupSearchListeners();
+        });
+    </script>
+</body>
+</html>'''
+
+with open('/mnt/kimi/output/dashboard.html', 'w', encoding='utf-8') as f:
+    f.write(html_dashboard)
+
+print("✅ تم إنشاء dashboard.html بنجاح!")
